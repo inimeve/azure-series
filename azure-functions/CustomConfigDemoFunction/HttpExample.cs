@@ -7,17 +7,28 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace CustomConfigDemoFunction
 {
-    public static class HttpExample
+    public class HttpExample
     {
+        private readonly IConfiguration Configuration;
+
+        public HttpExample(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         [FunctionName("HttpExample")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            var myKeyValue = Configuration["MyKey"];
+            log.LogInformation(myKeyValue);
 
             string name = req.Query["name"];
 
