@@ -17,12 +17,14 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
 
-    <None Update="appsettings.json">
+    <None Update="settings.dev.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="appsettings.Development.json">
+    <None Update="settings.pre.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+    <None Update="settings.pro.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

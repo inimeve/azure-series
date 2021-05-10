@@ -1,7 +1,7 @@
+using System;
 using System.IO;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(CustomConfigDemoFunction.Startup))]
 
@@ -17,9 +17,10 @@ namespace CustomConfigDemoFunction
         {
             FunctionsHostBuilderContext context = builder.GetContext();
 
+            String environmentSettings = System.Environment.GetEnvironmentVariable("environment_settings", EnvironmentVariableTarget.Process);
+
             builder.ConfigurationBuilder
-                .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true, reloadOnChange: false)
-                .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
+                .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"settings.{environmentSettings}.json"), optional: true, reloadOnChange: false)
                 .AddEnvironmentVariables();
         }
     }
